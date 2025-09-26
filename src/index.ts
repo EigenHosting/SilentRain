@@ -3,6 +3,11 @@ import { Bot } from "./utils/bot";
 
 export const bot = new Bot(
   new Client({
-    intents: [],
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent,
+      GatewayIntentBits.GuildMembers,
+    ],
   }),
 );
