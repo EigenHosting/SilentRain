@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "dist/src/index.js",
   "scripts": {
-    "build": "pnpx tsc",
+    "build": "pnpm dlx tsc",
     "start": "node --no-warnings .",
     "ts-start": "npx ts-node src/index.ts",
     "ts-test": "npx ts-node src/test.ts",
     "dev": "pnpm run build && pnpm run start",
-    "deploy": "pnpx tsc && pm2 start dist/src/index.js"
+    "deploy": "pnpm dlx tsc && pm2 start dist/src/index.js"
   },
   "license": "MIT",
   "dependencies": {
