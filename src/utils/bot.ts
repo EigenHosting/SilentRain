@@ -26,14 +26,7 @@ export class Bot {
   public constructor(public readonly client: Client) {
     console.log(
       chalk.hex("#6b7dfb")(`
-    ### ##   ##  ###            ## ##    ## ##   ##  ###  
-    ##  ##  ##   ##           ##   ##  ##   ##  ##  ##   
-    ##  ##  ##   ##           ####     ##   ##  ## ##    
-    ##  ##  ##   ##            #####   ##   ##  ## ##    
-    ## ##   ##   ##               ###  ##   ##  ## ###   
-    ##      ##   ##           ##   ##  ##   ##  ##  ##   
-    ####      ## ##             ## ##    ## ##   ##  ###  
-               ${chalk.hex("#8290F8")("© 2023 KAIL.")}
+               ${chalk.hex("#8290F8")("© 2025 SilentRain.")}
 `),
     );
 
@@ -49,7 +42,7 @@ export class Bot {
     this.client.on("error", console.error);
 
     this.client.user?.setPresence({
-      activities: [{ name: "Farming Simulator", type: ActivityType.Competing }],
+      activities: [{ name: "Eating Ram", type: ActivityType.Competing }],
       status: "online",
     });
 

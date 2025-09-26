@@ -1,14 +1,18 @@
-## pu-sok
+## Silent Rain
 
-Discord bot for KAIL server. Written in typescript.
+Discord bot for Eigen Hosting server. Written in typescript.
 
 ## getting started
 - install nodejs with [nvm](https://github.com/nvm-sh/nvm)
-- install yarn with npm (npm install --global yarn)
-- `git clone https://github.com/KhmerAILab/pu-sok && cd pu-sok`
+- install pnpm with npm 
+```
+npm install --global corepack@latest
+corepack enable pnpm
+```
+
+- `git clone https://github.com/EigenHosting/SilentRain && cd SilentRain`
 - `cp .example.env .env`
-- `yarn`
-- `yarn run deploy`
+- `pnpm i`
+- `pnpm run dev`
 
 ## Docker
-`cd pu-sok && docker compose -f docker-compose.yml up -d`

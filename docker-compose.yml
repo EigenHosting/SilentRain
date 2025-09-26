@@ -1,11 +1,10 @@
-version: "2.0"
 services:
   app:
-    container_name: pu-sok
+    container_name: silent-rain
     build:
       context: .
       dockerfile: Dockerfile
     env_file:
       - .env
     restart: always
-    command: yarn run ts-start
+    command: pnpm run start
