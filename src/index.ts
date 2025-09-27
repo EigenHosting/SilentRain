@@ -6,8 +6,12 @@ export const bot = new Bot(
     intents: [
       GatewayIntentBits.Guilds,
       GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.MessageContent,
       GatewayIntentBits.GuildMembers,
+      GatewayIntentBits.GuildPresences,
+
+      GatewayIntentBits.MessageContent,
     ],
   }),
 );
+
+
