@@ -6,3 +6,8 @@ export interface Command {
   data: SlashCommandBuilder;
   execute(...args: any): any;
 }
+
+export interface Event {
+  name: string;
+  execute(...args: any): any;
+}

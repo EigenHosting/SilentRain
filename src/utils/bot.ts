@@ -36,6 +36,7 @@ export class Bot {
       console.log(`${this.client.user!.username} ready!`);
 
       this.registerSlashCommands();
+      this.registerEvents();
     });
 
     this.client.on("warn", (info) => console.log(info));
@@ -46,9 +47,9 @@ export class Bot {
       status: "online",
     });
 
-    this.onInteractionCreate();
+    // this.onInteractionCreate();
   }
-
+  //Command Handler
   private async registerSlashCommands() {
     const rest = new REST({ version: "9" }).setToken(
       process.env.DISCORD_TOKEN ?? "",
@@ -71,36 +72,23 @@ export class Bot {
       body: this.slashCommands,
     });
   }
+  //Event Handler
+  private async registerEvents(){
+    const eventFiles = readdirSync(
+      join(__dirname, "..", "discord/events"),
+    ).filter((file) => !file.endsWith(".map"));
 
-  private async onInteractionCreate() {
-    this.client.on(
-      Events.InteractionCreate,
-      async (interaction: Interaction): Promise<any> => {
-        if (!interaction.isChatInputCommand()) return;
+    for(const file of eventFiles){
+      const event = await import(
+        join(__dirname, "..", "discord/events", `${file}`)
+      );
+      if(event.once){
+        this.client.once(event.name, (...args) => event.execute(...args));
+      } else {
+        this.client.on(event.name, (...args) => event.execute(...args));
+      }
 
-        const command = this.slashCommandsMap.get(interaction.commandName);
+    }
 
-        if (!command) return;
-        log({
-          name: " / ",
-          description: `[    Run    ] ${
-            interaction.user.tag
-          } => ${interaction.toString()}`,
-        });
-        try {
-          log({
-            name: " / ",
-            description: `[ Completed ] ${
-              interaction.user.tag
-            } => ${interaction.toString()}`,
-          });
-          command.execute(interaction as ChatInputCommandInteraction);
-        } catch (e: any) {
-          catchHandler(" / ")(
-            ` ${interaction.user.tag} => ${interaction.toString()}`,
-          );
-        }
-      },
-    );
-  }
+  }  
 }
