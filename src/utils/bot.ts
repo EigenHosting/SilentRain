@@ -37,15 +37,12 @@ export class Bot {
 
       this.registerSlashCommands();
       this.registerEvents();
+
+      this.client.user?.setActivity("Eating Ram", { type: ActivityType.Competing});
     });
 
     this.client.on("warn", (info) => console.log(info));
     this.client.on("error", console.error);
-
-    this.client.user?.setPresence({
-      activities: [{ name: "Eating Ram", type: ActivityType.Competing }],
-      status: "online",
-    });
 
     // this.onInteractionCreate();
   }
@@ -66,6 +63,7 @@ export class Bot {
 
       this.slashCommands.push(command.default.data);
       this.slashCommandsMap.set(command.default.data.name, command.default);
+
     }
 
     await rest.put(Routes.applicationCommands(this.client.user!.id), {
