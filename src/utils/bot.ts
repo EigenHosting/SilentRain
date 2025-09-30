@@ -10,7 +10,7 @@ import {
   Routes,
   Snowflake,
 } from "discord.js";
-import { readdirSync } from "fs";
+import { readdir, readdirSync } from "fs";
 import { join } from "path";
 import { Command } from "../types/command";
 import "dotenv/config";
@@ -22,6 +22,7 @@ export class Bot {
   public slashCommands = new Array<ApplicationCommandDataResolvable>();
   public slashCommandsMap = new Collection<string, Command>();
   public cooldowns = new Collection<string, Collection<Snowflake, number>>();
+  public buttonHandlers = new Map<string, (interaction: Interaction) => Promise<void>>();
 
   public constructor(public readonly client: Client) {
     console.log(
@@ -37,6 +38,7 @@ export class Bot {
 
       this.registerSlashCommands();
       this.registerEvents();
+      this.registerButtons();
 
       this.client.user?.setActivity("Eating Ram", { type: ActivityType.Competing});
     });
@@ -88,5 +90,20 @@ export class Bot {
 
     }
 
+  }
+  //Button Handler
+  private async registerButtons(){
+    const buttonFiles = readdirSync(
+      join(__dirname, "..", "discord/buttons"),
+    ).filter((file) => !file.endsWith(".map"));
+
+    for(const file of buttonFiles){
+      const button = await import(
+        join(__dirname, "..", "discord/buttons", `${file}`)
+      );
+      if (button.default && button.default.customId && typeof button.default.execute === "function") {
+        this.buttonHandlers.set(button.default.customId, button.default.execute);
+      }
+    }
   }  
 }
