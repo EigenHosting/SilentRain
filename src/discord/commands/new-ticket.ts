@@ -1,4 +1,4 @@
-import { EmbedBuilder, ChannelType, ChatInputCommandInteraction, SlashCommandBuilder, PermissionOverwrites, PermissionFlagsBits, TextChannel } from "discord.js";
+import { EmbedBuilder, ChannelType, ChatInputCommandInteraction, SlashCommandBuilder, PermissionOverwrites, PermissionFlagsBits, TextChannel, ButtonBuilder, ActionRowBuilder, ButtonStyle, Events, Interaction, ButtonInteraction, Client, GatewayIntentBits } from "discord.js";
 import { adminID } from "src/types/misc";
 import { bot } from "../..";
 
@@ -71,6 +71,13 @@ export default {
             ephemeral: true,
         });
 
+        const closeButton = new ButtonBuilder()
+            .setCustomId("closeButtonID")
+            .setLabel("Close Ticket")
+            .setStyle(ButtonStyle.Danger);
+
+        const row = new ActionRowBuilder<ButtonBuilder>().addComponents(closeButton);
+
         await (channel as TextChannel).send({
             content: `<@${user.id}>`,
             embeds: [
@@ -80,6 +87,7 @@ export default {
                     .setDescription("You'll probably have a staff member help you lol.")
                     .setTimestamp(),
             ],
+            components: [row],
         })
     },
 };
