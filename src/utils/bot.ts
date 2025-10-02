@@ -16,6 +16,7 @@ import { Command } from "../types/command";
 import "dotenv/config";
 import { catchHandler, warn, log, error } from "./console";
 import chalk from "chalk";
+import { startApiPoller } from "../discord/tasks/apiPoller";
 
 export class Bot {
   public commands = new Collection<string, Command>();
@@ -35,6 +36,8 @@ export class Bot {
 
     this.client.on("ready", () => {
       console.log(`${this.client.user!.username} ready!`);
+
+      startApiPoller(this.client);
 
       this.registerSlashCommands();
       this.registerEvents();
