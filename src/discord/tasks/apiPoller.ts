@@ -7,7 +7,7 @@ const API_URL = "http://eigen-api.krulaor.org/status";
 
 function createProgressBar(percentage: number, length: 10): string {
     const filledLength = Math.round(length*percentage/100);
-    const bar = "🟩".repeat(filledLength)+"🟥".repeat(length-filledLength);
+    const bar = "⬜".repeat(filledLength)+"⬛".repeat(length-filledLength);
     return `[${bar}] ${percentage}%`;
 }
 
